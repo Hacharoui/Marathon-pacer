@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Race Day">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+<title>Half Marathon · Race Day</title>
+</head>
+<body>
+<main id="app">
+  <header class="top"><div><b>RACE DAY <span class="date">27 SEP 2026</span></b><div id="gpsStatus" role="status">Connecting GPS…</div></div><button id="gpsBtn">Retry GPS</button></header>
+  <div class="modebar"><strong id="mode">GPS AUTO · waiting</strong><button id="autoBtn" hidden>GPS AUTO</button></div>
+  <div id="warning" role="status" hidden></div>
+  <section class="mapWrap" aria-label="Race course map">
+    <div id="map"></div>
+    <div class="mapTop"><span id="mapStatus">North up · course map</span><button id="overviewBtn">Whole route</button></div>
+    <button id="recenterBtn" class="recenter">RECENTER</button>
+  </section>
+  <section class="hero" aria-label="Current race strategy">
+    <div class="kmline"><div><div class="label">CURRENT SECTION</div><h1 id="kmTitle">KM 1</h1></div><div class="target"><div class="label">TARGET</div><div><strong id="pace">5:42</strong><span> /km</span></div></div></div>
+    <div id="action">SETTLE</div>
+    <p id="note">Start calm. Let people go. Smooth breathing.</p>
+    <div class="next"><span class="label">NEXT</span><b id="nextText"></b></div>
+    <div class="controls"><button id="prevBtn">− KM</button><button id="nextBtn">+ KM</button></div>
+  </section>
+  <section id="elevWrap" aria-label="Terrain ahead"><div class="sectionTitle"><b>Terrain ahead</b><span id="elevRange"></span></div><svg id="elev" viewBox="0 0 420 165" role="img" aria-label="Elevation in metres and course distance in kilometres"></svg><p class="small">Sampled every 250 m; small hills may be missing.</p></section>
+  <section class="support" aria-label="Course progress">
+    <div class="grid"><div><strong id="distance">—</strong><span>Course position</span></div><div><strong id="remain">—</strong><span>Remaining</span></div><div><strong id="offRoute">—</strong><span>From route</span></div></div>
+    <div class="progress"><div id="courseProgress"></div></div>
+    <p id="positionLabel" class="small">Waiting for a reliable course position.</p>
+    <div class="grid timing"><div><strong id="elapsed">00:00</strong><span>Elapsed</span></div><div><strong id="targetNow">—</strong><span>Plan here</span></div><div><strong id="delta">—</strong><span>Plan comparison</span></div></div>
+    <p class="small">Follow the tactical instruction. Don’t chase seconds on climbs.</p>
+    <button id="timerBtn" class="primary wide">START RACE</button>
+  </section>
+  <details id="settings"><summary>Settings &amp; simulation</summary>
+    <div class="settingsBody">
+      <p id="offlineStatus" role="status">Checking offline installation…</p>
+      <label class="check"><input id="tilesToggle" type="checkbox" checked> Street map when online</label>
+      <label class="check"><input id="wakeToggle" type="checkbox" checked> Keep screen awake</label><p id="wakeStatus" class="small"></p>
+      <button id="gpsStopBtn">Stop GPS</button>
+      <p class="small">GPS can pause when iPhone locks or this app is in the background. The timer keeps its original start time.</p>
+      <p class="dataNotice">Course data ends at 21.00 km. The final ~100 m has no supplied map or elevation. Follow the marked race course. Plan: 1:57:51 at 21.10 km.</p>
+      <div class="simulation"><h2>Development / simulation</h2><label class="check"><input id="simToggle" type="checkbox"> Enable simulation (isolated from your race)</label>
+        <div id="simControls" hidden><label for="simDistance">Simulated position: <b id="simReadout">0.00 km</b></label><input id="simDistance" type="range" min="0" max="21.1" step="0.01" value="0"><label for="simOffset">Behind (+) / ahead (−), seconds</label><input id="simOffset" type="number" value="0" min="-600" max="600" step="1"><button id="simPlay">Play course</button><p class="small">Playback: 100 m per second. GPS matching itself is covered by the automated route replay tests.</p></div>
+      </div>
+      <button id="resetBtn" class="danger wide">RESET RACE</button>
+      <p><a href="README.md">Deployment &amp; race-day guide</a></p>
+    </div>
+  </details>
+  <footer>Personal race aid · route stays visible without street tiles.</footer>
+</main>
+<script src="course-data.js"></script><script src="race-core.js"></script><script src="vendor/leaflet.js"></script><script src="app.js"></script>
+</body>
+</html>
